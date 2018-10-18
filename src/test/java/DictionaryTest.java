@@ -15,8 +15,8 @@ public class DictionaryTest {
         assertTrue(dog.contains("dog"));
     }
 
-    public static void main(String args[]) {
-        org.junit.runner.JUnitCore.main("DictionaryTest");
-    }
+//    public static void main(String args[]) {
+//        org.junit.runner.JUnitCore.main("DictionaryTest");
+//    }
 
 }

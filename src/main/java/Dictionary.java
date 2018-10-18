@@ -14,7 +14,7 @@ public class Dictionary {
         return "https://od-api.oxforddictionaries.com:443/api/v1/inflections/" + language + "/" + word_id;
     }
 
-    public String isEnglishWord(String word){
+    public String isEnglishWord(String word) {
 
         final String app_id = "932fae3b";
         final String app_key = "87288283740bf5f5ecfa080b2178abf1";
@@ -22,9 +22,9 @@ public class Dictionary {
         try {
             URL url = new URL(createLookupURL(word));
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-            urlConnection.setRequestProperty("Accept","application/json");
-            urlConnection.setRequestProperty("app_id",app_id);
-            urlConnection.setRequestProperty("app_key",app_key);
+            urlConnection.setRequestProperty("Accept", "application/json");
+            urlConnection.setRequestProperty("app_id", app_id);
+            urlConnection.setRequestProperty("app_key", app_key);
 
             // read the output from the server
             BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
@@ -37,8 +37,7 @@ public class Dictionary {
 
             return stringBuilder.toString();
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return e.toString();
         }
