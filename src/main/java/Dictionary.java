@@ -3,9 +3,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+/**
+ * Created by Jake on 10/17/18.
+ */
 public class Dictionary {
 
-    private String inflections(String word) {
+    private String createLookupURL(String word) {
         final String language = "en";
         final String word_id = word.toLowerCase(); //word id is case sensitive and lowercase is required
         return "https://od-api.oxforddictionaries.com:443/api/v1/inflections/" + language + "/" + word_id;
@@ -17,7 +20,7 @@ public class Dictionary {
         final String app_key = "87288283740bf5f5ecfa080b2178abf1";
 
         try {
-            URL url = new URL(inflections(word));
+            URL url = new URL(createLookupURL(word));
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
             urlConnection.setRequestProperty("Accept","application/json");
             urlConnection.setRequestProperty("app_id",app_id);
