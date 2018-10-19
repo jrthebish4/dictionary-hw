@@ -1,6 +1,4 @@
 import javax.net.ssl.HttpsURLConnection;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.URL;
 
 /**
@@ -8,39 +6,39 @@ import java.net.URL;
  */
 public class Dictionary {
 
+    private static final String DICTIONARY_API_BASE_URL = "https://od-api.oxforddictionaries.com:443/api/v1/";
+    private static final String API_ID = "932fae3b";
+    private static final String API_KEY = "87288283740bf5f5ecfa080b2178abf1";
+
+
     private String createLookupURL(String word) {
-        final String language = "en";
-        final String word_id = word.toLowerCase(); //word id is case sensitive and lowercase is required
-        return "https://od-api.oxforddictionaries.com:443/api/v1/inflections/" + language + "/" + word_id;
+        final String lookupType = "entries"; //entry lookup
+        final String language = "en"; //english dictionary
+        final String wordId = word.toLowerCase(); //word must be lowercase
+        return DICTIONARY_API_BASE_URL + lookupType + "/" + language + "/" + wordId;
     }
 
-    public String isEnglishWord(String word) {
 
-        final String app_id = "932fae3b";
-        final String app_key = "87288283740bf5f5ecfa080b2178abf1";
+    public Boolean isEnglishWord(String word) {
+
+        Boolean isRealWord = false;
 
         try {
             URL url = new URL(createLookupURL(word));
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
             urlConnection.setRequestProperty("Accept", "application/json");
-            urlConnection.setRequestProperty("app_id", app_id);
-            urlConnection.setRequestProperty("app_key", app_key);
+            urlConnection.setRequestProperty("app_id", API_ID);
+            urlConnection.setRequestProperty("app_key", API_KEY);
 
-            // read the output from the server
-            BufferedReader reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            StringBuilder stringBuilder = new StringBuilder();
+            int responseCode = urlConnection.getResponseCode();
 
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line + "\n");
-            }
-
-            return stringBuilder.toString();
+            isRealWord = (responseCode == 200); //API returns a 200 response if word is in dictionary
 
         } catch (Exception e) {
             e.printStackTrace();
-            return e.toString();
         }
+
+        return isRealWord;
     }
 
 }
