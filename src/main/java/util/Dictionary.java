@@ -1,8 +1,12 @@
+package util;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.net.URL;
 
 /**
- * Created by Jake on 10/17/18.
+ * This class can be used to call the Oxford Dictionary API
+ * to verify if a word exists in the english dictionary
+ * Created by Jake on 10/19/18.
  */
 public class Dictionary {
 
@@ -11,14 +15,11 @@ public class Dictionary {
     private static final String API_KEY = "87288283740bf5f5ecfa080b2178abf1";
 
 
-    private String createLookupURL(String word) {
-        final String lookupType = "entries"; //entry lookup
-        final String language = "en"; //english dictionary
-        final String wordId = word.toLowerCase(); //word must be lowercase
-        return DICTIONARY_API_BASE_URL + lookupType + "/" + language + "/" + wordId;
-    }
-
-
+    /**
+     * API call to Oxford Dictionary
+     * @param word - word to search in dictionary
+     * @return true if word/abbreviation is found in dictionary
+     */
     public Boolean isEnglishWord(String word) {
 
         Boolean isRealWord = false;
@@ -40,5 +41,19 @@ public class Dictionary {
 
         return isRealWord;
     }
+
+
+    /**
+     * Formats the URL for use in isEnglishWord method
+     * @param word - the word being searched
+     * @return URL for dictionary lookup API call
+     */
+    private String createLookupURL(String word) {
+        final String lookupType = "entries"; //entry API lookup
+        final String language = "en"; //english dictionary
+        final String wordId = word.toLowerCase(); //word must be lowercase
+        return DICTIONARY_API_BASE_URL + lookupType + "/" + language + "/" + wordId;
+    }
+
 
 }
